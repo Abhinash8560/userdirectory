@@ -1,18 +1,39 @@
 import React, { useState } from "react";
 import PersonModal from "./PersonModal";
+import UsersEdit from "./UsersEdit";
+import { Button } from "react-bootstrap";
 
 function UserList(props) {
-  const { users, sortField, sortOrder, onSort, onUserClick } = props;
-
+  const { users, setUsers, sortField, sortOrder, onSort, onUserClick } = props;
+  const [tag,setTag] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
+  const [showEditModal,setShowEditModal] = useState(false);
+  const handlebhai = (hs)=>{
+    console.log(hs
+    )
+    setTag(hs);
+    setShowEditModal(true);
+  }
   const handleSortClick = (field) => {
     onSort(field);
   };
-
+const handlechange = (editedUser)=>{
+  const temp = users.map((user) => {
+    if (user.id === editedUser.id) {
+      return editedUser;
+    } else {
+      return user;
+    }
+  })
+  setUsers(temp)
+}
+const changemodal = ()=>{
+  setShowEditModal(false);
+}
   return (
     <div className="table-responsive">
+       {showEditModal && tag && <UsersEdit tag={tag} onSave={handlechange} onClose={changemodal}/>}
       <table className="table">
         <thead>
           <tr style={{ cursor: "pointer" }}>
@@ -34,6 +55,7 @@ function UserList(props) {
             <th className="p-2" style={{ width: "100px" }}>
               Details
             </th>
+            <th className="p-2">Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +69,7 @@ function UserList(props) {
               <td className="p-2">
                 <PersonModal person={user} />
               </td>
+              <td className="p-2 pointer"><Button onClick={()=>handlebhai(user)}>Edit</Button> </td>
             </tr>
           ))}
         </tbody>

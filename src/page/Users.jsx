@@ -67,17 +67,16 @@ function Users() {
   });
 
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor:'#35BDD0'}}>
       <header className="App-header">
-        <h1>User Directory</h1>
-        <div className="search-container">
+        <h1 className="d-flex justify-content-center">User Directory</h1>
+        <div className="search-container d-flex justify-content-center">
           <input
             type="text"
             placeholder="Search by name, username, email, phone or website"
             value={searchTerm}
-            style={{width:"70%", padding:"10px 12px", margin:"10px 0"}}
+            style={{width:"60%", padding:"10px 12px", margin:"10px 0"}}
             onChange={handleSearchChange}
-            onKeyPress={handleSearchChange}
           />
         </div>
       </header>
@@ -86,6 +85,7 @@ function Users() {
       ) : (
         <UserList
           users={sortedUsers}
+          setUsers={setUsers}
           sortField={sortField}
           sortOrder={sortOrder}
           onSort={handleSort}
